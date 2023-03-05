@@ -1,0 +1,24 @@
+apiVersion: v1
+data:
+  A1_ADAPTER_NORTHBOUND: "false"
+  CCSDK_REPLICAS: "0"
+  DOMAIN: ""
+  ENABLE_ODL_CLUSTER: "false"
+  JAVA_OPTS: -Xms256m -Xmx4g
+  ODL_ADMIN_PASSWORD: admin
+  ODL_CERT_DIR: /opt/opendaylight/current/certs
+  SDNC_CONFIG_DIR: /opt/onap/ccsdk/data/properties
+  SDNC_REPLICAS: "0"
+  SDNR_NETCONF_CALLHOME_ENABLED: "true"
+  SDNR_VES_COLLECTOR_IP: vescollector
+  SDNR_VES_COLLECTOR_PORT: "8080"
+  SDNRDBURL: http://sdnrdb:9200
+  SDNRINIT: "true"
+  SDNRONLY: "true"
+  SDNRWT: "true"
+kind: ConfigMap
+metadata:
+  labels:
+    app: sdnr
+  name: sdnr-configmap
+  namespace: smo

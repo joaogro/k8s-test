@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sdnrdb
+  name: sdnrdb
+  namespace: smo
+spec:
+  clusterIP: 10.96.0.228
+  clusterIPs:
+  - 10.96.0.228
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: port1
+    port: 9200
+    protocol: TCP
+    targetPort: 9200
+  - name: port2
+    port: 9300
+    protocol: TCP
+    targetPort: 9300
+  selector:
+    app: sdnrdb
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

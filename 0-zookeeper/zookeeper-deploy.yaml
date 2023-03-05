@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    io.kompose.service: zookeeper
+  name: zookeeper
+  namespace: smo
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      io.kompose.service: zookeeper
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/nonrtric-docker-net: "true"
+        io.kompose.service: zookeeper
+    spec:
+      containers:
+      - env:
+        - name: KAFKA_OPTS
+          value: -Djava.security.auth.login.config=/etc/zookeeper/secrets/jaas/zk_server_jaas.conf
+            -Dzookeeper.kerberos.removeHostFromPrincipal=true -Dzookeeper.kerberos.removeRealmFromPrincipal=true
+            -Dzookeeper.authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+            -Dzookeeper.requireClientAuthScheme=sasl
+        - name: ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL
+          value: "24"
+        - name: ZOOKEEPER_AUTOPURGE_SNAP_RETAIN_COUNT
+          value: "3"
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "2181"
+        - name: ZOOKEEPER_INIT_LIMIT
+          value: "10"
+        - name: ZOOKEEPER_MAX_CLIENT_CNXNS
+          value: "200"
+        - name: ZOOKEEPER_REPLICAS
+          value: "1"
+        - name: ZOOKEEPER_SERVER_ID
+          value: "1"
+        - name: ZOOKEEPER_SYNC_LIMIT
+          value: "5"
+        - name: ZOOKEEPER_TICK_TIME
+          value: "2000"
+        image: nexus3.onap.org:10001/onap/dmaap/zookeeper:6.0.3
+        imagePullPolicy: IfNotPresent
+        name: zookeeper
+        ports:
+        - containerPort: 2181
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/zookeeper/secrets/jaas/zk_server_jaas.conf
+          name: zookeeper-claim0
+          readOnly: true
+          subPath: zk_server_jaas.conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: zookeeper-config
+        name: zookeeper-claim0
+  replicas: 1

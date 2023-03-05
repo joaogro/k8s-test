@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/name: mariadb-galera
+  name: data-mariadb-galera-2
+  namespace: smo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: "nfs"
+  volumeMode: Filesystem

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: kafka1
+  name: kafka1
+  namespace: smo
+spec:
+  clusterIP: 10.96.0.92
+  clusterIPs:
+  - 10.96.0.92
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: "9092"
+    port: 9092
+    protocol: TCP
+    targetPort: 9092
+  selector:
+    io.kompose.service: kafka1
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

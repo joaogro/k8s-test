@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  name: vescollector
+  namespace: smo
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: vescollector
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: vescollector
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - bin/docker-entry.sh
+        env:
+        - name: DMAAPHOST
+          value: dmaap
+        - name: PATH
+          value: /usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: LANG
+          value: C.UTF-8
+        - name: JAVA_HOME
+          value: /usr/local/openjdk-11
+        - name: JAVA_VERSION
+          value: 11.0.6
+        - name: JAVA_BASE_URL
+          value: https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.6%2B10/OpenJDK11U-jre_
+        - name: JAVA_URL_VERSION
+          value: 11.0.6_10
+        - name: HOSTALIASES
+          value: /etc/host.aliases
+        image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.8.0
+        imagePullPolicy: IfNotPresent
+        name: vescollector
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsUser: 0
+      terminationGracePeriodSeconds: 30
+  replicas: 1

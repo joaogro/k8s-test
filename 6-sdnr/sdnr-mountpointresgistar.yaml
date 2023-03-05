@@ -1,0 +1,48 @@
+apiVersion: v1
+data:
+  mountpoint-registrar.properties: |
+    [general]
+    dmaapEnabled=true
+    baseUrl=http://sdnr:8181
+    sdnrUser=admin
+    sdnrPasswd=Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+
+    [fault]
+    faultConsumerClass=org.onap.ccsdk.features.sdnr.wt.mountpointregistrar.impl.DMaaPFaultVESMsgConsumer
+    TransportType=HTTPNOAUTH
+    host=dmaap:3904
+    topic=unauthenticated.SEC_FAULT_OUTPUT
+    contenttype=application/json
+    group=myG
+    id=C1
+    timeout=2000
+    limit=1000
+    fetchPause=5000
+
+    [pnfRegistration]
+    pnfRegConsumerClass=org.onap.ccsdk.features.sdnr.wt.mountpointregistrar.impl.DMaaPPNFRegVESMsgConsumer
+    TransportType=HTTPNOAUTH
+    host=dmaap:3904
+    topic=unauthenticated.VES_PNFREG_OUTPUT
+    contenttype=application/json
+    group=myG
+    id=C1
+    timeout=2000
+    limit=1000
+    fetchPause=5000
+
+    [provisioning]
+    provisioningConsumerClass=org.onap.ccsdk.features.sdnr.wt.mountpointregistrar.impl.DMaaPCMVESMsgConsumer
+    TransportType=HTTPNOAUTH
+    host=dmaap:3904
+    topic=unauthenticated.SEC_3GPP_PROVISIONING_OUTPUT
+    contenttype=application/json
+    group=myG
+    id=C1
+    timeout=2000
+    limit=1000
+    fetchPause=5000
+kind: ConfigMap
+metadata:
+  name: mountpointregistrar
+  namespace: smo

@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  zk_client_jaas.conf: |
+    Client {
+       org.apache.zookeeper.server.auth.DigestLoginModule required
+       username="kafka"
+       password="kafka_secret";
+    };
+kind: ConfigMap
+metadata:
+  name: kafka-config
+  namespace: smo
