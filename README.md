@@ -13,8 +13,7 @@ Check the ip range for services and the storage class used in your cluster.
 
 KUBEADM Intallation
 --------------------- 
-For the deployment of this solution first a k8s cluster is needed.
-This installation was made on Ubuntu Focal, for more details: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+This installation was made on Ubuntu Focal reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
 - sudo apt install kubelet=1.21.0-00 kubeadm=1.21.0-00 kubectl=1.21.0-00 docker.io
 
@@ -53,6 +52,7 @@ Reference: http://www.thinkcode.se/blog/2019/02/20/kubernetes-service-node-port-
 
 The file that has to be changed is /etc/kubernetes/manifests/kube-apiserver.yaml
 - insert this line: - --service-node-port-range=00000-39767
+
 After that the api will reset with the apropiate node port range.
 
 NFS installation
