@@ -9,7 +9,7 @@ First build the docker image:
 Then create the k8s elements:
 - kubectl create -f directory-name
 
-Check the ip range for services and the storage class used in your cluster, modifie it if needed.
+Check the ip range for services and the storage class used in your cluster.
 
 KUBEADM Intallation
 --------------------- 
