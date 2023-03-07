@@ -7,8 +7,9 @@ First build the docker image:
 - docker build -t cpqd-sdnr:latest .
 
 Then create the k8s elements:
-Check the ip range for services and the storage class used in your cluster, modifie it if needed.
 - kubectl create -f directory-name
+
+Check the ip range for services and the storage class used in your cluster, modifie it if needed.
 
 KUBEADM Intallation
 --------------------- 
