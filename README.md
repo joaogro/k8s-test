@@ -29,16 +29,16 @@ This installation was made on Ubuntu Focal reference: https://kubernetes.io/docs
 - sudo apt install kubelet=1.21.0-00 kubeadm=1.21.0-00 kubectl=1.21.0-00 docker.io
 
 - sudo systemctl enable docker
-  sudo systemctl start docker
-  swapoff -a
+-  sudo systemctl start docker
+-  swapoff -a
 
 - echo 'Environment="KUBELET_SYSTEM_PODS_ARGS=--pod-manifest-path=/etc/kubernetes/manifests --allow-privileged=true --fail-swap-on=false"' >>                     /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
       
 - sudo kubeadm init --pod-network-cidr=192.168.0.0/16
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  kubectl taint nodes ubuntu node-role.kubernetes.io/master:NoSchedule-
+-  mkdir -p $HOME/.kube
+-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+-  kubectl taint nodes ubuntu node-role.kubernetes.io/master:NoSchedule-
 
 installing the cni
 --------------------------
