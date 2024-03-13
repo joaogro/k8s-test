@@ -72,3 +72,22 @@ Install nfs-ganesha-server-and-external-provisioner:
 - helm install --version=1.5.0 nfs-provisioner nfs-ganesha-server-and-external-provisioner/nfs-server-provisioner -n nfs --wait
 
 Check if the envrioment is running (kubectl get all -n nfs), then reset the kublet service.
+Adicionando e atualizando repositórios Helm charts do Calico, Aether e Incubator:
+helm repo add projectcalico https://docs.projectcalico.org/charts;
+helm repo add aether https://charts.aetherproject.org;
+helm repo add incubator https://charts.helm.sh/incubator;
+helm repo update;
+
+Instalando Charts Calico (Foi utilizado a versão 3.25.0):
+helm install calico projectcalico/tigera-operator --version v3.25.0
+#helm install calico projectcalico/tigera-operator --version v3.23.3 (Obs: se essa versão ficar 3.25.0 ficar instável, utilizar a 3.23.3)
+
+Download e instalação do multus:
+cd $HOME
+wget https://github.com/k8snetworkplumbingwg/multus-cni/archive/refs/tags/v3.7.1.zip
+sudo apt install unzip
+unzip v3.7.1.zip
+cd multus-cni-3.7.1
+sudo updatedb
+kubectl apply -f $HOME/multus-cni-3.7.1/images/multus-daemonset.yml
+
